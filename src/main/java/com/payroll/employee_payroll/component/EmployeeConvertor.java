@@ -1,5 +1,6 @@
 package com.payroll.employee_payroll.component;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -19,8 +20,9 @@ public class EmployeeConvertor {
 		return dto;
 	}
 	
+	@SuppressWarnings("null")
 	public List<EmployeeDto> entityToDto(List<Employee> emp){
-		List<EmployeeDto> employeeDto = null;
+		List<EmployeeDto> employeeDto = new ArrayList<>();
 		for (Employee employee : emp) {
 			employeeDto.add(entityToDto(employee));
 		}
@@ -37,8 +39,9 @@ public class EmployeeConvertor {
 		return employee;
 	}
 	
+	@SuppressWarnings("null")
 	public List<Employee> dtoToEntity(List<EmployeeDto> empDto){
-		List<Employee> employee = null;
+		List<Employee> employee = new ArrayList<>();
 		for (EmployeeDto employeeDto : empDto) {
 			employee.add(dtoToEntity(employeeDto));
 		}
