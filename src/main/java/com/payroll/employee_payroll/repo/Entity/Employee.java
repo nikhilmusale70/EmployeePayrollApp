@@ -8,9 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Data;
+
 @Entity
 @Table(name= "employee_payroll")
-public class Employee {
+public @Data class Employee {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
@@ -18,38 +20,4 @@ public class Employee {
 	private String salary;
 	private Date start;
 	private char gender;
-	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getSalary() {
-		return salary;
-	}
-	public void setSalary(String salary) {
-		this.salary = salary;
-	}
-	public Date getStart() {
-		return start;
-	}
-	public void setStart(Date start) {
-		this.start = start;
-	}
-	public char getGender() {
-		return gender;
-	}
-	public void setGender(char gender) {
-		this.gender = gender;
-	}
-	
-	
-	
 }
