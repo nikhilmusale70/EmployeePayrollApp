@@ -3,8 +3,10 @@ package com.payroll.employee_payroll.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,10 +38,25 @@ public class EmployeePayrollController {
 		return employeeConvertor.entityToDto(emp);
 	}
 	
+	@RequestMapping("/finds/{id}")
+	public Employee findByIds(@PathVariable(value = "id") int id) {
+		Employee emp = myRepo.findById(id).orElse(null);
+		return emp;
+	}
+	
 	@PostMapping("/save")
-	public EmployeeDto findById(@RequestBody EmployeeDto empDto) {
-		Employee emp = employeeConvertor.dtoToEntity(empDto);
+	public Employee findById(@RequestBody Employee emp) {
 		myRepo.save(emp);
-		return empDto;
+		return emp;
+	}
+	
+	@DeleteMapping("/delete/{id}")
+	public void findAndDeleteById(@PathVariable(value = "id") int id) {
+		myRepo.deleteById(id);
+	}
+	
+	@PutMapping("/put/{id}")
+	public void putById(@RequestBody Employee empployee,@PathVariable(value = "id") int id) {
+		myRepo.save(empployee);
 	}
 }
