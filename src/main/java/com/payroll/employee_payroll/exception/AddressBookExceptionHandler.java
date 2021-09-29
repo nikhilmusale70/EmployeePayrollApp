@@ -26,4 +26,9 @@ public class AddressBookExceptionHandler {
 		
 	}
 	
+	@ExceptionHandler(IndexOutOfBoundsException.class)
+	public ResponseEntity<ResponseDTO> handleAddressNotException(IndexOutOfBoundsException exception){
+		ResponseDTO responseDTO=new ResponseDTO("Exception while Accesing employee with given id",exception.getMessage());
+		return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.BAD_REQUEST);
+	}
 }
