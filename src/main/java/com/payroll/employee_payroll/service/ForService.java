@@ -2,26 +2,36 @@ package com.payroll.employee_payroll.service;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.payroll.employee_payroll.repo.MyRepo;
 import com.payroll.employee_payroll.repo.Entity.Employee;
 
 @Service
 public class ForService {
-	@Autowired
-	MyRepo repo;
 	
-	static	List<Employee> emp = new ArrayList<>();
+	static	List<Employee> empList = new ArrayList<>();
 	
-	public void forStoringInMemory() {
-		 emp = repo.findAll();
+
+	public void add(Employee employee) {
+		int index = empList.size();
+		employee.setId(index);
+		empList.add(index, employee);
 	}
 	
-	public void forTest() {
-		System.out.println(emp.get(0).getName());
+	public List<Employee> findAll() {
+		return empList;
+	}
+	
+	public Employee findById(int id) {
+		return empList.get(id);
+	}
+	
+	public void put(int id,Employee pm) {
+		empList.remove(id);
+		empList.add(id,pm);
+	}
+	
+	public void delete(int id) {
+		empList.remove(id);
 	}
 	
 }

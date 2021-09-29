@@ -2,6 +2,8 @@ package com.payroll.employee_payroll.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.payroll.employee_payroll.component.EmployeeConvertor;
-import com.payroll.employee_payroll.repo.MyRepo;
 import com.payroll.employee_payroll.repo.Entity.Employee;
-import com.payroll.employee_payroll.repo.dto.EmployeeDto;
 import com.payroll.employee_payroll.service.ForService;
 
 
@@ -21,51 +21,37 @@ import com.payroll.employee_payroll.service.ForService;
 public class EmployeePayrollController {
 	
 	@Autowired
-	MyRepo myRepo;
-	
-	@Autowired
-	ForService forService;
+	ForService employeeService;
 	
 	@Autowired
 	EmployeeConvertor employeeConvertor;
 		
 	@RequestMapping("/findAll")
-	public List<EmployeeDto> getData() {
-		
-		List<Employee> emp = myRepo.findAll();
-		return employeeConvertor.entityToDto(emp);
-	}
-	
-	@RequestMapping("/find/{id}")
-	public EmployeeDto findById(@PathVariable(value = "id") int id) {
-		Employee emp = myRepo.findById(id).orElse(null);
-		return employeeConvertor.entityToDto(emp);
+	public List<Employee> getData() {
+		List<Employee> emp = employeeService.findAll();
+		return emp;
 	}
 	
 	@RequestMapping("/finds/{id}")
 	public Employee findByIds(@PathVariable(value = "id") int id) {
-		Employee emp = myRepo.findById(id).orElse(null);
+		Employee emp = employeeService.findById(id);
 		return emp;
 	}
 	
 	@PostMapping("/save")
-	public Employee findById(@RequestBody Employee emp) {
-		myRepo.save(emp);
+	public Employee findById(@Valid @RequestBody Employee emp) {
+		employeeService.add(emp);
 		return emp;
 	}
 	
 	@DeleteMapping("/delete/{id}")
 	public void findAndDeleteById(@PathVariable(value = "id") int id) {
-		myRepo.deleteById(id);
+		employeeService.delete(id);
 	}
 	
 	@PutMapping("/put/{id}")
 	public void putById(@RequestBody Employee empployee,@PathVariable(value = "id") int id) {
-		myRepo.save(empployee);
+		employeeService.put(id,empployee);
 	}
 	
-	@RequestMapping("/storeInMemory")
-	public void forStoring() {
-		forService.forStoringInMemory();	
-	}
 }
