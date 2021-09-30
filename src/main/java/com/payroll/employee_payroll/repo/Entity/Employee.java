@@ -8,9 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.NonNull;
 
 @Entity
 @Table(name= "employee_payroll")
@@ -24,8 +26,11 @@ public @Data class Employee {
 	private String salary;
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date start;
-	private char gender;
+	@Pattern(regexp = "male|female", message = "Gender needs to be male or female")
+	private String gender;
+	@NotBlank(message = "Note should not be blank")
 	String note;
+	@NotBlank(message = "Pic should not be empty")
 	String profilePic;
 	public ArrayList<String> department;
 }

@@ -2,6 +2,9 @@ package com.payroll.employee_payroll.exception;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.validation.UnexpectedTypeException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.ObjectError;
@@ -31,4 +34,11 @@ public class AddressBookExceptionHandler {
 		ResponseDTO responseDTO=new ResponseDTO("Exception while Accesing employee with given id",exception.getMessage());
 		return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.BAD_REQUEST);
 	}
+	
+	@ExceptionHandler(UnexpectedTypeException.class)
+	public ResponseEntity<ResponseDTO> handleAddressNotException(UnexpectedTypeException exception){
+		ResponseDTO responseDTO=new ResponseDTO("Exception while adding",exception.getMessage());
+		return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.BAD_REQUEST);
+	}
+	
 }
