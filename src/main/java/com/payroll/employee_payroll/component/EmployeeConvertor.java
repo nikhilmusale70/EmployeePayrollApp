@@ -1,13 +1,12 @@
 package com.payroll.employee_payroll.component;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.payroll.employee_payroll.repo.Entity.Employee;
-import com.payroll.employee_payroll.repo.dto.EmployeeDto;
+import com.payroll.employee_payroll.Entity.Employee;
+import com.payroll.employee_payroll.dto.EmployeeDto;
 
 @Component
 public class EmployeeConvertor {

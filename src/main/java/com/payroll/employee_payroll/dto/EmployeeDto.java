@@ -1,4 +1,4 @@
-package com.payroll.employee_payroll.repo.dto;
+package com.payroll.employee_payroll.dto;
 
 import javax.validation.constraints.Pattern;
 

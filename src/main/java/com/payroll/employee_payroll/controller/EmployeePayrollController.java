@@ -11,10 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.payroll.employee_payroll.component.EmployeeConvertor;
-import com.payroll.employee_payroll.repo.Entity.Employee;
+import com.payroll.employee_payroll.Entity.Employee;
 import com.payroll.employee_payroll.service.ForService;
 
 
@@ -24,9 +22,6 @@ public class EmployeePayrollController {
 	@Autowired
 	ForService employeeService;
 	
-	@Autowired
-	EmployeeConvertor employeeConvertor;
-		
 	@GetMapping("/findAll")
 	public List<Employee> getData() {
 		List<Employee> emp = employeeService.findAll();
@@ -46,13 +41,15 @@ public class EmployeePayrollController {
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	public void findAndDeleteById(@PathVariable(value = "id") int id) {
+	public String findAndDeleteById(@PathVariable(value = "id") int id) {
 		employeeService.delete(id);
+		return "Deleted";
 	}
 	
 	@PutMapping("/put/{id}")
-	public void putById(@RequestBody Employee empployee,@PathVariable(value = "id") int id) {
+	public String putById(@RequestBody Employee empployee,@PathVariable(value = "id") int id) {
 		employeeService.put(id,empployee);
+		return "Updated";
 	}
 	
 }
