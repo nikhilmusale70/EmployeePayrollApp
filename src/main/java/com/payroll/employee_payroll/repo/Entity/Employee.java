@@ -1,6 +1,7 @@
 package com.payroll.employee_payroll.repo.Entity;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,9 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import lombok.Data;
 
 @Entity
@@ -26,4 +25,7 @@ public @Data class Employee {
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date start;
 	private char gender;
+	String note;
+	String profilePic;
+	public ArrayList<String> department;
 }
