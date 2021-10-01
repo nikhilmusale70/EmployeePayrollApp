@@ -1,7 +1,6 @@
 package com.payroll.employee_payroll.Entity;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CollectionTable;
@@ -14,8 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import com.fasterxml.jackson.annotation.JsonFormat;
+
+import com.payroll.employee_payroll.dto.EmployeeDto;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Entity
@@ -25,27 +26,38 @@ public @Data class Employee {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "empId")
 	private int id;
-	
-	@Pattern(regexp = "^[A-Z]{1}[a-zA-Z\\s]{2,}$", message ="Name invalid")
 	@Column(name = "name")
 	private String name;
 	@Column(name = "salary")
 	private String salary;
-	@JsonFormat(pattern="yyyy-MM-dd")
 	@Column(name = "start")
 	private Date start;
-	@Pattern(regexp = "male|female", message = "Gender needs to be male or female")
 	@Column(name = "gender")
 	private String gender;
 	@NotBlank(message = "Note should not be blank")
 	@Column(name = "note")
-	String note;
+	private String note;
 	@NotBlank(message = "Pic should not be empty")
 	@Column(name = "profilePic")
-	String profilePic;
+	private String profilePic;
 	
 	@ElementCollection(targetClass = String.class)
 	@CollectionTable(name="employee_department",joinColumns=@JoinColumn(name="id"))
 	@Column(name="department")
-	public List<String> department;
+	private List<String> department;
+
+	public Employee(EmployeeDto employeeDto) {
+		super();
+		this.name = employeeDto.getName();
+		this.salary = employeeDto.getSalary();
+		this.start = employeeDto.getStart();
+		this.gender = employeeDto.getGender();
+		this.note = employeeDto.getNote();
+		this.profilePic = employeeDto.getProfilePic();
+		this.department = employeeDto.getDepartment();
+	}
+	
+	public Employee() {
+		
+	}
 }

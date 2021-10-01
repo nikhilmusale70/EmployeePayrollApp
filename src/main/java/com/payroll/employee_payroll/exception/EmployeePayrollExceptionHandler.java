@@ -17,7 +17,7 @@ import com.payroll.employee_payroll.dto.ResponseDTO;
 
 
 @ControllerAdvice
-public class AddressBookExceptionHandler {
+public class EmployeePayrollExceptionHandler {
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ResponseDTO> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception){
@@ -52,6 +52,18 @@ public class AddressBookExceptionHandler {
 	@ExceptionHandler(NullPointerException.class)
 	public ResponseEntity<ResponseDTO> handleAddressNotException(NullPointerException exception){
 		ResponseDTO responseDTO=new ResponseDTO("No such id is there",exception.getMessage());
+		return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(EmployeePayrollException.class)
+	public ResponseEntity<ResponseDTO> customException(EmployeePayrollException exception){
+		ResponseDTO responseDTO=new ResponseDTO("",exception.getMessage());
+		return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<ResponseDTO> handleAddressNotException(Exception exception){
+		ResponseDTO responseDTO=new ResponseDTO("",exception.getMessage());
 		return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.BAD_REQUEST);
 	}
 	

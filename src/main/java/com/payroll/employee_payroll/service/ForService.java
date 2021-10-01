@@ -6,41 +6,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.payroll.employee_payroll.Entity.Employee;
+import com.payroll.employee_payroll.dto.EmployeeDto;
+import com.payroll.employee_payroll.exception.EmployeePayrollException;
 import com.payroll.employee_payroll.repo.MyRepo;
 
 @Service
-public class ForService {
+public class ForService implements InterfaceService {
 	
 	@Autowired
 	MyRepo myRepo;
 		
-	public void add(Employee employee) {
-		myRepo.save(employee);
+	@Override
+	public void add(EmployeeDto employeeDto) {
+		Employee emp = new Employee(employeeDto);
+		myRepo.save(emp);
 	}
 	
+	@Override
 	public List<Employee> findAll() {
 		return myRepo.findAll();
 	}
 	
-	public Employee findById(Integer id) {
-		return myRepo.findById(id).orElse(null);
+	@Override
+	public Employee findById(int id){
+		return myRepo.findById((Integer)id).orElseThrow(()->new EmployeePayrollException("Id not found"));
 	}
 	
-	public void put(Integer id,Employee pm) {
-		Employee employee = myRepo.findById(id).orElse(null);
-		employee.setName(pm.getName());
-		employee.setGender(pm.getGender());
-		employee.setNote(pm.getNote());
-		employee.setDepartment(pm.department);
-		employee.setProfilePic(pm.getProfilePic());
-		employee.setSalary(pm.getSalary());
-		employee.setStart(pm.getStart());
-		
+	@Override
+	public void put(int id,EmployeeDto eDto){
+		Employee employee = myRepo.findById((Integer)id).orElseThrow(()->new EmployeePayrollException("Id not found"));
+		employee = new Employee(eDto);
 		myRepo.save(employee);
 	}
 	
+	@Override
 	public void delete(int id) {
-		myRepo.deleteById(id);
+		myRepo.deleteById((Integer)id);
 	}
-	
+
 }
